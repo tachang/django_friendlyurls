@@ -34,3 +34,10 @@ user = User.objects.get(pk=1)
 user.friendly_urls.all()
 
 to get a list of all the friendly urls.
+
+Problems / Questions
+--------------------
+
+Don't forget to run syncdb because friendlyurls creates tables.
+
+

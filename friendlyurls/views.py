@@ -22,14 +22,16 @@ def resolve_friendly_url(request):
     log.debug("Lookup path [%s] | [%s]" % (start_path, remaining_path) )
 
     redirection = UrlMapping.objects.get(friendly_path = start_path)
-    log.debug("URL mapping found. Returning view for: %s" % redirection.absolute_path)
+    log.debug("URL mapping found. Returning get_absolute_url() on %s" % redirection.content_object)
 
-    request.previous_url = redirection.absolute_path
+    # Absolute URL for object
+    obj_absolute_url = redirection.content_object.get_absolute_url()
+    request.previous_url = obj_absolute_url
 
     if( remaining_path != '' ):
-      view, args, kwargs = resolve("%s/%s" % (redirection.absolute_path, remaining_path))
+      view, args, kwargs = resolve("%s/%s" % (obj_absolute_url, remaining_path))
     else:
-      view, args, kwargs = resolve(redirection.absolute_path)
+      view, args, kwargs = resolve(obj_absolute_url)
 
     kwargs['request'] = request
     return view(*args, **kwargs)
@@ -37,4 +39,3 @@ def resolve_friendly_url(request):
   except UrlMapping.DoesNotExist:
     log.error("No URL mapping exists for: %s" % request.path)
     raise Http404
-
