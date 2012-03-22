@@ -13,8 +13,10 @@ class UrlMapping(models.Model):
   def __unicode__(self):
     return "%s" % (self.friendly_path)
 
-def get_absolute_url(self):
-  return u'/user/%s' % self.id
+  def resolved_url(self):
+    """Call get_absolute_url() on the content_object and return the url.
+    """
+    return self.content_object.get_absolute_url()
 
-User.add_to_class('friendly_urls', generic.GenericRelation(UrlMapping))
-User.get_absolute_url = get_absolute_url
+  def object(self):
+    return str(self.content_object)
