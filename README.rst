@@ -53,6 +53,11 @@ Problems / Questions
 Don't forget to run syncdb because friendlyurls creates a table to store the URL mappings.
 
 
+Additional Settings
+-------------------
+
+FRIENDLYURLS_IGNORE_CASE - Set this to True if you want to ignore the case when trying to find a path. Default: False
+
 Todo Features
 -------------
 
@@ -60,3 +65,4 @@ Todo Features
 Probably do a from django.core.cache import cache
 
 https://docs.djangoproject.com/en/dev/topics/cache/?from=olddocs
+

@@ -2,6 +2,7 @@ import logging
 from friendlyurls.models import *
 from django.core.urlresolvers import resolve
 from django.http import HttpResponseForbidden, HttpResponse, Http404
+from django.conf import settings
 
 log = logging.getLogger(__name__)
 
@@ -21,7 +22,11 @@ def resolve_friendly_url(request):
     start_path, sep, remaining_path = request.path.strip('/').partition('/')
     log.debug("Lookup path [%s] | [%s]" % (start_path, remaining_path) )
 
-    redirection = UrlMapping.objects.get(friendly_path = start_path)
+    if( settings.FRIENDLYURLS_IGNORE_CASE == True ):
+      redirection = UrlMapping.objects.get(friendly_path__iexact = start_path)
+    else:
+      redirection = UrlMapping.objects.get(friendly_path = start_path)
+
     log.debug("URL mapping found. Returning get_absolute_url() on %s" % redirection.content_object)
 
     # Absolute URL for object
