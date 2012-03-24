@@ -9,7 +9,7 @@ except ImportError:
 
 setup(
     name='django_friendlyurls',
-    version='0.1.0',
+    version='0.1.1',
     description='Use friendly urls with Django.',
     author='Jeff Tchang',
     author_email='jeff.tchang@gmail.com',
